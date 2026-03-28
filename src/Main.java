@@ -2,6 +2,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    private static final int BURNING_THRESHOLD  = 10;
+    private static final int WARM_THRESHOLD     = 20;
+    private static final int COLD_THRESHOLD     = 40;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -67,6 +70,13 @@ public class Main {
         else return "CORRECT";
     }
 
+    static String getProximityHint(int distance){
+        if (distance <= BURNING_THRESHOLD) return "Burning — you're very close!";
+        else if (distance <= WARM_THRESHOLD) return "Warm — getting there.";
+        else if (distance <= COLD_THRESHOLD) return "Cold — not quite.";
+        else return "Freezing — way off!";
+    }
+
     static boolean askPlayAgain(Scanner scanner) {
         while (true) {
             System.out.print("Play again? (yes/no): ");
@@ -103,6 +113,9 @@ public class Main {
                 return;
             } else {
                 System.out.println(result.equals("TOO_HIGH") ? "Too high, try lower." : "Too low, try higher.");
+                int distance = Math.abs(userGuess - randomNumber);
+                String proximityHint = getProximityHint(distance);
+                System.out.println(proximityHint);
                 System.out.printf("Remaining attempts: %d%n", difficulty.maxAttempts -  attempts);
             }
         }
