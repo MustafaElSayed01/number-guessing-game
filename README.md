@@ -1,6 +1,6 @@
 # Number Guessing Game
 
-A command-line Java game where the player selects a difficulty level and attempts to guess a randomly generated number within a limited number of attempts. After each incorrect guess, the game provides directional feedback and shows remaining attempts.
+A command-line Java game where the player selects a difficulty level and attempts to guess a randomly generated number within a limited number of attempts. After each incorrect guess, the game provides directional feedback, a hot/cold proximity hint, and shows remaining attempts.
 
 ## Concepts Practiced
 
@@ -14,6 +14,8 @@ A command-line Java game where the player selects a difficulty level and attempt
 - Enums with fields and constructors
 - `printf` for formatted console output
 - Ternary operator for compact conditionals
+- Static final constants to avoid magic numbers
+- `Math.abs()` for computing proximity distance
 
 ## Requirements
 
@@ -49,16 +51,22 @@ Choose your difficulty:
 1. Easy: Numbers between 1 and 50 with 15 valid attempt.
 2. Medium: Numbers between 1 and 100 with 10 valid attempt.
 3. Hard: Numbers between 1 and 200 with 7 valid attempt.
-Enter choice (1/2/3): 2
-Guess a number between 1 and 100...
-Enter your guess: 50
-Too high, try lower.
-Remaining attempts: 9
-Enter your guess: 25
+Enter choice (1/2/3): 3
+Guess a number between 1 and 200...
+Enter your guess: 52
 Too low, try higher.
-Remaining attempts: 8
-Enter your guess: 37
-You got it! Attempts: 3
+Freezing — way off!
+Remaining attempts: 6
+Enter your guess: 150
+Too low, try higher.
+Warm — getting there.
+Remaining attempts: 5
+Enter your guess: 170
+Too high, try lower.
+Burning — you're very close!
+Remaining attempts: 4
+Enter your guess: 161
+You got it! Attempts: 4
 
 Play again? (yes/no): n
 Thanks for playing. Goodbye!
