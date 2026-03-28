@@ -14,18 +14,44 @@ public class Main {
         System.out.println("Thanks for playing, Goodbye!");
     }
 
-    static int generateSecretNumber(Random random) {
-        return random.nextInt(100) + 1;
+    static Difficulty chooseDifficulty(Scanner scanner) {
+        System.out.println("\nChoose your difficulty:");
+        System.out.println("1. Easy: Numbers between 1 and 50 with 15 valid attempt.");
+        System.out.println("2. Medium: Numbers between 1 and 100 with 10 valid attempt.");
+        System.out.println("3. Hard: Numbers between 1 and 200 with 7 valid attempt.");
+
+        while (true) {
+            System.out.print("Enter choice(1/2/3):");
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1" -> {
+                    return Difficulty.EASY;
+                }
+                case "2" -> {
+                    return Difficulty.MEDIUM;
+                }
+                case "3" -> {
+                    return Difficulty.HARD;
+                }
+                default -> {
+                    System.out.println("Invalid choice, Please pick from 1 to 3!");
+                }
+            }
+        }
     }
 
-    static int getUserGuess(Scanner scanner) {
+    static int generateSecretNumber(Random random, Difficulty difficulty) {
+        return random.nextInt(difficulty.min, difficulty.max + 1);
+    }
+
+    static int getUserGuess(Scanner scanner, Difficulty difficulty) {
         while (true) {
             System.out.print("Enter your guess: ");
             String input = scanner.nextLine();
             try {
                 int guess = Integer.parseInt(input);
-                if (guess < 1 || guess > 100) {
-                    System.out.println("Invalid guess\n Please enter a number between 0 and 100");
+                if (guess < difficulty.min || guess > difficulty.max) {
+                    System.out.printf("Please enter a number between %d and %d.%n", difficulty.min, difficulty.max);
                     continue;
                 }
                 return guess;
@@ -60,25 +86,26 @@ public class Main {
         }
     }
 
-    static boolean playGame(Scanner scanner, Random random) {
-        int randomNumber = generateSecretNumber(random);
+    static void playGame(Scanner scanner, Random random) {
+        Difficulty difficulty = chooseDifficulty(scanner);
+        int randomNumber = generateSecretNumber(random, difficulty);
         int attempts = 0;
-        System.out.println("Guess a number between 1 and 100...");
+        System.out.printf("Guess a number between %d and %d...%n", difficulty.min, difficulty.max);
 
-        while (true) {
-            int userGuess = getUserGuess(scanner);
+        while (attempts < difficulty.maxAttempts) {
+            int userGuess = getUserGuess(scanner, difficulty);
             attempts++;
 
             String result = checkGuess(userGuess, randomNumber);
 
             if (result.equals("CORRECT")) {
                 System.out.println("You got it! Attempts: " + attempts);
-                return true;
-            } else if (result.equals("TOO_HIGH")) {
-                System.out.println("Too high, try lower.");
+                return;
             } else {
-                System.out.println("Too low, try higher.");
+                System.out.println(result.equals("TOO_HIGH") ? "Too high, try lower." : "Too low, try higher.");
+                System.out.printf("Remaining attempts: %d%n", difficulty.maxAttempts -  attempts);
             }
         }
+        System.out.println("Out of attempts! The number was: " + randomNumber);
     }
 }
