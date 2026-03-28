@@ -4,11 +4,13 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Random rand = new Random();
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.println("Welcome to Number Guessing Game!");
         do {
-            playGame(sc, rand);
-        } while (askPlayAgain(sc));
+            playGame(scanner, random);
+        } while (askPlayAgain(scanner));
         System.out.println("Thanks for playing, Goodbye!");
     }
 
@@ -22,7 +24,7 @@ public class Main {
             String input = scanner.nextLine();
             try {
                 int guess = Integer.parseInt(input);
-                if (guess < 0 || guess > 100) {
+                if (guess < 1 || guess > 100) {
                     System.out.println("Invalid guess\n Please enter a number between 0 and 100");
                     continue;
                 }
@@ -61,8 +63,6 @@ public class Main {
     static boolean playGame(Scanner scanner, Random random) {
         int randomNumber = generateSecretNumber(random);
         int attempts = 0;
-
-        System.out.println("Welcome to Number Guessing Game!");
         System.out.println("Guess a number between 1 and 100...");
 
         while (true) {
