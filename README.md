@@ -45,10 +45,10 @@ java -cp src Main
 ```
 Welcome to Number Guessing Game!
 
-Choose difficulty:
-  1. Easy   (1 - 50,  15 attempts)
-  2. Medium (1 - 100, 10 attempts)
-  3. Hard   (1 - 200,  7 attempts)
+Choose your difficulty:
+1. Easy: Numbers between 1 and 50 with 15 valid attempt.
+2. Medium: Numbers between 1 and 100 with 10 valid attempt.
+3. Hard: Numbers between 1 and 200 with 7 valid attempt.
 Enter choice (1/2/3): 2
 Guess a number between 1 and 100...
 Enter your guess: 50
