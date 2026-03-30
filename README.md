@@ -17,6 +17,7 @@ A command-line Java game where the player selects a difficulty level and attempt
 - Static final constants to avoid magic numbers
 - `Math.abs()` for computing proximity distance
 - Sentinel return values for invalid input signaling
+- `ArrayList` for dynamic guess history tracking
 
 ## Requirements
 
@@ -78,7 +79,8 @@ Too high, try lower.
 Burning — you're very close!
 Remaining attempts: 5 Remaining hints: 0
 Enter your guess: 141
-Congratulations, You got it in 5 attempts!
+Congratulations, You got it in 3 attempts!
+Your guesses: [100, 149, 141]
 
 Play again? (yes/no): n
 Thanks for playing. Goodbye!

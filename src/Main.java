@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -112,6 +113,8 @@ public class Main {
         int secret = generateSecretNumber(random, difficulty);
         int attempts = 0;
         int hintsRemaining = difficulty.maxHints;
+        ArrayList<Integer> guesses = new ArrayList<>();
+
         System.out.printf("Guess a number between %d and %d...%n", difficulty.min, difficulty.max);
         System.out.println("Type hint for a hint!");
         while (attempts < difficulty.maxAttempts) {
@@ -129,12 +132,13 @@ public class Main {
             }
             int userGuess = getUserGuess(userInput, difficulty);
             if (userGuess == -1) continue;
-
+            guesses.add(userGuess);
             attempts++;
             String result = checkGuess(userGuess, secret);
 
             if (result.equals("CORRECT")) {
-                System.out.printf("Congratulations, You got it in %d attempts%n" , attempts);
+                System.out.printf("Congratulations, You got it in %d attempts%n", attempts);
+                System.out.println("Your guesses: " + guesses);
                 return;
             } else {
                 System.out.println(result.equals("TOO_HIGH") ? "Too high, try lower." : "Too low, try higher.");
@@ -145,5 +149,6 @@ public class Main {
             }
         }
         System.out.println("Out of attempts! The number was: " + secret);
+        System.out.println("Your guesses: " + guesses);
     }
 }
