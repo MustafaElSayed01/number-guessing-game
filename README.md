@@ -1,6 +1,6 @@
 # Number Guessing Game
 
-A command-line Java game where the player selects a difficulty level and attempts to guess a randomly generated number within a limited number of attempts. After each incorrect guess, the game provides directional feedback, a hot/cold proximity hint, and shows remaining attempts.
+A command-line Java game where the player selects a difficulty level and attempts to guess a randomly generated number within a limited number of attempts. After each incorrect guess, the game provides directional feedback, a hot/cold proximity hint, and shows remaining attempts. Players can also request hints to reveal clues about the secret number.
 
 ## Concepts Practiced
 
@@ -16,6 +16,7 @@ A command-line Java game where the player selects a difficulty level and attempt
 - Ternary operator for compact conditionals
 - Static final constants to avoid magic numbers
 - `Math.abs()` for computing proximity distance
+- Sentinel return values for invalid input signaling
 
 ## Requirements
 
@@ -23,11 +24,22 @@ A command-line Java game where the player selects a difficulty level and attempt
 
 ## Difficulty Levels
 
-| Level  | Range   | Max Attempts |
-|--------|---------|--------------|
-| Easy   | 1 – 50  | 15           |
-| Medium | 1 – 100 | 10           |
-| Hard   | 1 – 200 | 7            |
+| Level  | Range   | Max Attempts | Hints |
+|--------|---------|--------------|-------|
+| Easy   | 1 – 50  | 15           | 3     |
+| Medium | 1 – 100 | 10           | 2     |
+| Hard   | 1 – 200 | 7            | 1     |
+
+## Proximity Hints
+
+After each wrong guess the game tells you how close you are:
+
+| Distance from secret | Hint                         |
+|----------------------|------------------------------|
+| 1 – 10               | Burning — you're very close! |
+| 11 – 20              | Warm — getting there.        |
+| 21 – 40              | Cold — not quite.            |
+| 41+                  | Freezing — way off!          |
 
 ## How to Run
 
@@ -48,25 +60,25 @@ java -cp src Main
 Welcome to Number Guessing Game!
 
 Choose your difficulty:
-1. Easy: Numbers between 1 and 50 with 15 valid attempt.
-2. Medium: Numbers between 1 and 100 with 10 valid attempt.
-3. Hard: Numbers between 1 and 200 with 7 valid attempt.
+1. Easy: Numbers between 1 and 50 with 15 valid attempt and 3 Hints.
+2. Medium: Numbers between 1 and 100 with 10 valid attempt and 2 Hints.
+3. Hard: Numbers between 1 and 200 with 7 valid attempt and 1 Hint.
 Enter choice (1/2/3): 3
 Guess a number between 1 and 200...
-Enter your guess: 52
+Type hint for a hint!
+Enter your guess: 100
 Too low, try higher.
 Freezing — way off!
-Remaining attempts: 6
-Enter your guess: 150
-Too low, try higher.
-Warm — getting there.
-Remaining attempts: 5
-Enter your guess: 170
+Remaining attempts: 6 Remaining hints: 1
+Enter your guess: hint
+The secret number is: ODD
+Remaining hints: 0
+Enter your guess: 149
 Too high, try lower.
 Burning — you're very close!
-Remaining attempts: 4
-Enter your guess: 161
-You got it! Attempts: 4
+Remaining attempts: 5 Remaining hints: 0
+Enter your guess: 141
+Congratulations, You got it in 5 attempts!
 
 Play again? (yes/no): n
 Thanks for playing. Goodbye!
