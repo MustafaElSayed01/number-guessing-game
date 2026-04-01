@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,11 +11,18 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+        HashMap<Difficulty, Integer> bestScores = new HashMap<>();
 
         System.out.println("Welcome to Number Guessing Game!");
         do {
-            playGame(scanner, random);
+            playGame(scanner, random, bestScores);
         } while (askPlayAgain(scanner));
+        if(!bestScores.isEmpty()) {
+            System.out.println("\n--- Session Best Scores ---");
+            for (HashMap.Entry<Difficulty, Integer> entry : bestScores.entrySet()) {
+                System.out.printf("Best Score for %s is %d attempts!%n", entry.getKey(), entry.getValue());
+            }
+        }
         System.out.println("Thanks for playing, Goodbye!");
     }
 
@@ -108,13 +116,20 @@ public class Main {
         }
     }
 
-    static void playGame(Scanner scanner, Random random) {
+    static boolean updateBestScore (HashMap < Difficulty, Integer > bestScores, Difficulty difficulty,int attempts){
+        int currentBest = bestScores.getOrDefault(difficulty, Integer.MAX_VALUE);
+        if (attempts < currentBest) {
+            bestScores.put(difficulty, attempts);
+        }
+        return attempts < currentBest;
+    }
+
+    static void playGame(Scanner scanner, Random random, HashMap<Difficulty, Integer> bestScores) {
         Difficulty difficulty = chooseDifficulty(scanner);
         int secret = generateSecretNumber(random, difficulty);
         int attempts = 0;
         int hintsRemaining = difficulty.maxHints;
         ArrayList<Integer> guesses = new ArrayList<>();
-
         System.out.printf("Guess a number between %d and %d...%n", difficulty.min, difficulty.max);
         System.out.println("Type hint for a hint!");
         while (attempts < difficulty.maxAttempts) {
@@ -139,6 +154,12 @@ public class Main {
             if (result.equals("CORRECT")) {
                 System.out.printf("Congratulations, You got it in %d attempts%n", attempts);
                 System.out.println("Your guesses: " + guesses);
+                if (updateBestScore(bestScores, difficulty, attempts)) {
+                    System.out.printf("New Best Score For %s : %d attempts!%n", difficulty, attempts);
+                } else {
+                    int bestScore = bestScores.get(difficulty);
+                    System.out.printf("Best Score For %s is still %d attempts!%n", difficulty, bestScore);
+                }
                 return;
             } else {
                 System.out.println(result.equals("TOO_HIGH") ? "Too high, try lower." : "Too low, try higher.");
