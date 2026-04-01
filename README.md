@@ -18,6 +18,9 @@ A command-line Java game where the player selects a difficulty level and attempt
 - `Math.abs()` for computing proximity distance
 - Sentinel return values for invalid input signaling
 - `ArrayList` for dynamic guess history tracking
+- `HashMap` for per-difficulty best score tracking
+- `entrySet()` for iterating over key-value pairs
+- `getOrDefault()` for safe map access with fallback values
 
 ## Requirements
 
@@ -83,7 +86,11 @@ Congratulations, You got it in 3 attempts!
 Your guesses: [100, 149, 141]
 
 Play again? (yes/no): n
-Thanks for playing. Goodbye!
+
+--- Session Best Scores ---
+Best Score for EASY: 3 attempts
+Best Score for MEDIUM: 4 attempts
+Thanks for playing, Goodbye!
 ```
 
 ## Project Structure
